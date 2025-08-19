@@ -48,6 +48,9 @@ local function onEnteringDriverSeat()
             Wait(0)
         end
     end)
+    if(config.getKeysWhenEntering) then
+        TriggerServerEvent('qbx_vehiclekeys:server:tookKeys', VehToNet(vehicle))
+    end
     local vehicleConfig = GetVehicleConfig(vehicle)
     if vehicleConfig.shared then return end
 
@@ -85,11 +88,6 @@ lib.onCache('seat', function(newSeat)
     if newSeat ~= -1 then return end
     Wait(0) -- needed to update cache.seat
     onEnteringDriverSeat()
-end)
-
-lib.onCache('vehicle', function(vehicle)
-    if not vehicle then return end
-    SetVehicleKeepEngineOnWhenAbandoned(vehicle, config.keepEngineOnWhenAbandoned)
 end)
 
 -----------------------
